@@ -1,2 +1,126 @@
-# telco-customer-churn
-End-to-end churn prediction pipeline — EDA, ANOVA feature selection, 6 classifiers (LR, KNN, NB, DT, RF, Neural Network), GridSearchCV tuning | Best ROC-AUC: 0.836 | Python · Scikit-learn · TensorFlow
+# 📉 Telco Customer Churn Prediction — End-to-End ML Pipeline
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
+
+> Predicting customer churn for a telecom provider using a full ML pipeline — EDA, feature selection, 6 classifiers, hyperparameter tuning, and a neural network — achieving a best ROC-AUC of **0.836**.
+
+---
+
+## 📌 Problem Statement
+
+Customer churn is a critical business problem in the telecom industry. Identifying at-risk customers before they leave allows companies to intervene with targeted retention strategies. This project builds and evaluates a suite of machine learning models to predict churn using customer demographics, service usage, and billing data.
+
+---
+
+## 📂 Dataset
+
+- **Source:** [IBM Telco Customer Churn — Kaggle](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
+- **Size:** 7,043 records → stratified sample of **5,000 records**
+- **Features:** 21 (demographics, contract type, payment method, services, billing)
+- **Class distribution:** 73% non-churn / 27% churn (imbalanced)
+
+---
+
+## 🔬 Methodology
+
+### Phase 1 — EDA & Data Preparation
+- Removed irrelevant columns (e.g. `customerID`), handled missing values in `TotalCharges`
+- Standardised column names, data types, and categorical labels
+- Conducted univariate, bivariate, and multivariate analysis (histograms, boxplots, violin plots, correlation matrices)
+- Stratified random sampling to maintain class balance at 5,000 records
+
+**Key EDA findings:**
+- Month-to-month contract customers churn significantly more
+- Electronic check users have higher churn rates than auto-pay users
+- Higher monthly charges and shorter tenure are strong churn indicators
+- Senior citizens and new customers are higher-risk segments
+
+### Phase 2 — Predictive Modelling
+
+**Train/Test Split:** 70/30 stratified split  
+**Validation:** 5-fold stratified cross-validation  
+**Feature Selection:** ANOVA F-value ranking to identify top predictors  
+**Preprocessing:** StandardScaler for numeric features, One-Hot Encoding for categoricals  
+**Dropped features:** `Gender`, `PhoneService` (low ANOVA significance)
+
+**Models trained & tuned:**
+| Model | Tuning Method |
+|---|---|
+| Logistic Regression | GridSearchCV (C, solver) |
+| K-Nearest Neighbours | GridSearchCV (k, distance metric) |
+| Naive Bayes | var_smoothing |
+| Decision Tree | GridSearchCV (max_depth, min_samples) |
+| Random Forest | GridSearchCV (n_estimators, max_depth) |
+| Neural Network | Manual tuning (lr, dropout, batch size, units) |
+
+**Neural Network Architecture:**
+- Hidden layers: 32 → 16 units
+- Activation: ReLU + Sigmoid output
+- Optimizer: Adam (lr = 0.001)
+- Dropout: 0.10
+- Batch size: 64
+
+---
+
+## 📊 Results
+
+| Model | Accuracy | ROC-AUC |
+|---|---|---|
+| **Logistic Regression** | 0.7934 | **0.8359** ✅ |
+| **Random Forest** | 0.7962 | 0.8295 |
+| Neural Network | ~0.79 | ~0.832 |
+| Decision Tree | — | — |
+| KNN | — | — |
+| Naive Bayes | — | — |
+
+> Logistic Regression achieved the best ROC-AUC (0.836), demonstrating that once categorical features are properly one-hot encoded, a linear decision boundary is highly effective for this problem.
+
+**Top churn predictors:** Contract type · Monthly charges · Tenure · Payment method · Tech support
+
+---
+
+## 💡 Business Recommendations
+
+- **Contract incentives** — Offer discounts to move month-to-month customers onto 1–2 year contracts
+- **Payment outreach** — Encourage electronic check users to switch to automatic billing
+- **Loyalty pricing** — Target high-bill, short-tenure customers with onboarding support and loyalty discounts
+- **Segment focus** — Prioritise senior citizens and new customers in retention campaigns
+
+---
+
+## 🗂️ Project Structure
+
+```
+telco-churn/
+│
+├── Telco_Customer_Churn_Prediction_Analysis.ipynb   # Full pipeline notebook
+├── WA_Fn-UseC_-Telco-Customer-Churn.csv             # Dataset (from Kaggle)
+└── README.md
+```
+
+---
+
+## ▶️ How to Run
+
+```bash
+# Clone the repo
+git clone https://github.com/tanishq19/telco-customer-churn.git
+cd telco-customer-churn
+
+# Install dependencies
+pip install pandas numpy scikit-learn tensorflow matplotlib seaborn jupyter
+
+# Launch notebook
+jupyter notebook Telco_Customer_Churn_Prediction_Analysis.ipynb
+```
+
+---
+
+## 🔗 Data Source
+
+Blastchar. (2018). *Telco Customer Churn* [Data set]. Kaggle.  
+https://www.kaggle.com/datasets/blastchar/telco-customer-churn
