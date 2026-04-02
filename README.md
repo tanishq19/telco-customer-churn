@@ -48,6 +48,7 @@ Customer churn is a critical business problem in the telecom industry. Identifyi
 **Dropped features:** `Gender`, `PhoneService` (low ANOVA significance)
 
 **Models trained & tuned:**
+
 | Model | Tuning Method |
 |---|---|
 | Logistic Regression | GridSearchCV (C, solver) |
@@ -68,14 +69,14 @@ Customer churn is a critical business problem in the telecom industry. Identifyi
 
 ## 📊 Results
 
-| Model | Accuracy | ROC-AUC |
-|---|---|---|
-| **Logistic Regression** | 0.7934 | **0.8359** ✅ |
-| **Random Forest** | 0.7962 | 0.8295 |
-| Neural Network | ~0.79 | ~0.832 |
-| Decision Tree | — | — |
-| KNN | — | — |
-| Naive Bayes | — | — |
+| Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC |
+|---|---|---|---|---|---|
+| **Logistic Regression** | 0.7934 | 0.7855 | 0.7934 | 0.7882 | **0.8359** ✅ |
+| **Random Forest** | 0.7953 | 0.7832 | 0.7953 | 0.7846 | 0.8264 |
+| Naive Bayes | 0.7829 | 0.7676 | 0.7829 | 0.7684 | 0.8233 |
+| Neural Network | 0.7791 | 0.7685 | 0.7791 | 0.7718 | 0.8250 |
+| KNN | 0.7787 | 0.7725 | 0.7787 | 0.7750 | 0.8188 |
+| Decision Tree | 0.7796 | 0.7624 | 0.7796 | 0.7604 | 0.7927 |
 
 > Logistic Regression achieved the best ROC-AUC (0.836), demonstrating that once categorical features are properly one-hot encoded, a linear decision boundary is highly effective for this problem.
 
@@ -95,11 +96,10 @@ Customer churn is a critical business problem in the telecom industry. Identifyi
 ## 🗂️ Project Structure
 
 ```
-telco-churn/
+telco-customer-churn/
 │
 ├── Telco_Customer_Churn_Prediction_Analysis.ipynb   # Full pipeline notebook
-├── WA_Fn-UseC_-Telco-Customer-Churn.csv             # Dataset (from Kaggle)
-└── README.md
+└── README.md                                        # Dataset sourced from Kaggle (link below)
 ```
 
 ---
@@ -107,14 +107,18 @@ telco-churn/
 ## ▶️ How to Run
 
 ```bash
-# Clone the repo
+# 1. Clone the repo
 git clone https://github.com/tanishq19/telco-customer-churn.git
 cd telco-customer-churn
 
-# Install dependencies
+# 2. Download the dataset from Kaggle:
+#    https://www.kaggle.com/datasets/blastchar/telco-customer-churn
+#    Place the CSV in the project root directory
+
+# 3. Install dependencies
 pip install pandas numpy scikit-learn tensorflow matplotlib seaborn jupyter
 
-# Launch notebook
+# 4. Launch notebook
 jupyter notebook Telco_Customer_Churn_Prediction_Analysis.ipynb
 ```
 
@@ -124,3 +128,6 @@ jupyter notebook Telco_Customer_Churn_Prediction_Analysis.ipynb
 
 Blastchar. (2018). *Telco Customer Churn* [Data set]. Kaggle.  
 https://www.kaggle.com/datasets/blastchar/telco-customer-churn
+
+---
+
